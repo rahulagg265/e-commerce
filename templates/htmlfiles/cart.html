@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+<div class="container">
+    <div class="contentbar">
+        <!-- Start row -->
+        <div class="row">
+            <!-- Start col -->
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <div class="card m-b-30">
+                    <div class="card-header">
+                        <h5 class="card-title">Cart</h5>
+                    </div>
+                    <div class="alert alert-primary" role="alert">
+                        Note: A delivery charge of ₹50 will be charged if the cart total is less than ₹500.
+                      </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10 col-xl-8">
+                                <div class="cart-container">
+                                    <div class="cart-head">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Action</th>
+                                                        <th scope="col">Photo</th>
+                                                        <th scope="col">Product</th>
+                                                        <th scope="col">Qty</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col" class="text-right">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        {% for item in  items %}
+                                                        <th scope="row">{{item.id}}</th>
+                                                        <td><a  class="text-danger"><i
+                                                                    class="ri-delete-bin-3-line "></i></a></td>
+                                                        <td class="box"><img src="{{item.product.imageURL}}"
+                                                                class="img-fluid" width="35" alt="product"> </td>
+                                                        
+                                                        <td>{{item.product.name}}</td>
+                                                        <td>
+                                                            <div>
+                                                            <p class="quantity" >{{item.quantity}}</p>
+                                                            <div class="quantity mb-0">
+                                                                <input type="submit" value="+" data-action="add"  data-product="{{item.product.id}}" class=" update-cart" >
+
+                                                                <input type="submit" value="-" data-action="remove" data-product="{{item.product.id}}" class=" update-cart" >
+                                                            </div>
+                                                        </div>
+                                                        </td>
+                                                        <td>₹{{item.product.price}}</td>
+                                                        <td class="text-right">{{item.gettotal}}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="cart-body">
+                                        <div class="row">
+                                            <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
+                                                <div class="order-note"> 
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
+                                                <div class="order-total table-responsive ">
+                                                    <table class="table table-borderless text-right">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Sub Total :</td>
+                                                                <td>₹{{order.carttotal}}</td>
+                                                            </tr>
+                                                            {% if order.carttotal < 500  %}
+                                                            <tr>
+                                                                <td>Shipping :</td>
+                                                                <td>₹100.00</td>
+                                                            </tr>    
+                                                            
+                                                            {% else %}
+                                                            <tr>
+                                                                <td>Shipping :</td>
+                                                                <td>₹0.00</td>
+                                                            </tr>    
+                                                       
+                                                            {% endif %}
+                                                            <tr>
+                                                                <td class="f-w-7 font-18">
+                                                                    <h4>Amount :</h4>
+                                                                </td>
+                                                                <td class="f-w-7 font-18">
+                                                                    <h4>₹{{order.carttotal}}</h4>
+
+                                                                </td>
+                                                              
+                                                                </div>
+                                                                <div class="cart-footer text-right">
+                                                                    <a href={% url 'checkout' %} class="btn btn-success my-1">Proceed to Checkout<i
+                                                                            class="ri-arrow-right-line ml-2"></i></a>
+                                                                </div>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End col -->
+        </div>
+        <!-- End row -->
+    </div>
+</div>
+{% endblock body %}
+
+
+<script type="text/javascript">
+
+</script>
+
+
+{% comment %} value={{item.quantity}} {% endcomment %}
